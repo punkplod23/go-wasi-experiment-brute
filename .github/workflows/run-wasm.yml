@@ -1,6 +1,6 @@
-name: Run WASM with Wasmtime
+name: Build Go WASM
 
-on: 
+on:
   push:
     branches:
       - main
@@ -9,24 +9,26 @@ on:
       - main
 
 jobs:
-  run-wasm:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.17'
 
-    - name: Create Dockerfile
-      run: |
-        echo 'FROM wasmtime/wasmtime:latest' > Dockerfile
-        echo 'COPY main.wasm /main.wasm' >> Dockerfile
-        echo 'ENTRYPOINT ["/wasmtime", "/main.wasm"]' >> Dockerfile
+    - name: Install dependencies
+      run: go mod download
 
-    - name: Build Docker image
-      run: docker build -t run-wasm .
+    - name: Build WASM
+      run: GOOS=wasip1 GOARCH=wasm go build -o main.wasm
 
-    - name: Run Docker container
-      run: docker run --rm run-wasm
+    - name: Upload WASM binary
+      uses: actions/upload-artifact@v2
+      with:
+        name: wasm-binary
+        path: main.wasm

@@ -1,7 +1,7 @@
 services:
   wasm3:
-    image: wasm3/wasm3:latest
-    container_name: wasm3_runtime
+    image: renefonseca/wasmtime
+    container_name: wasmtime
     volumes:
-      - ./main.wasm:/wasm
-    command: ["wasm3", "/wasm/main.wasm"]
+      - ./main.wasm:/wasm/main.wasm
+    command: ["wasmtime", "/wasm/main.wasm"]
