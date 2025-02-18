@@ -33,7 +33,7 @@ docker-build:
 	docker build -t gwythe/main-wasm:0.1 .
 
 docker-run:
-	docker run --runtime=io.containerd.wasmtime.v1 gwythe/main-wasm:0.1
+	docker run gwythe/main-wasm:0.1
 
 download-wasmtime:
     wget $(WASM_RUNTIME_URL)
