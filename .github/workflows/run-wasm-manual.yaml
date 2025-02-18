@@ -1,0 +1,56 @@
+name: Build Go WASM
+
+on:
+  workflow_dispatch:  # Make the workflow run manually
+    inputs:
+      param1:
+        description: 'Parameter 1 for WASM'
+        required: true
+      param2:
+        description: 'Parameter 2 for WASM'
+        required: true
+      param3:
+        description: 'Parameter 3 for WASM'
+        required: true
+      param4:
+        description: 'Parameter 4 for WASM'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24'
+
+      - name: Install dependencies
+        run: go mod download
+
+      - name: Build WASM
+        run: GOOS=wasip1 GOARCH=wasm go build -o main.wasm
+
+      - name: Upload WASM binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: wasm-binary
+          path: main.wasm
+
+      - name: Build Docker image
+        run: docker build -t wasm-container .
+
+      - name: Run Docker container
+        run: |
+          output=$(docker run --rm -v ${{ github.workspace }}/main.wasm:/main.wasm wasm-container "${{ github.event.inputs.param1 }}" "${{ github.event.inputs.param2 }}" "${{ github.event.inputs.param3 }}" "${{ github.event.inputs.param4 }}")
+          echo "$output" > output.txt
+
+      - name: Upload WASM output
+        uses: actions/upload-artifact@v4
+        with:
+          name: wasm-output
+          path: output.txt
