@@ -40,4 +40,4 @@ jobs:
       run: |
            output=$(docker run --rm -v ${{ github.workspace }}/main.wasm:/main.wasm wasm-container)
            echo "$output"
-           echo "$escaped_output" > output.txt
+           echo "$output" > output.txt
