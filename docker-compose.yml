@@ -1,0 +1,7 @@
+services:
+  wasm3:
+    image: wasm3/wasm3:latest
+    container_name: wasm3_runtime
+    volumes:
+      - ./main.wasm:/wasm
+    command: ["wasm3", "/wasm/main.wasm"]

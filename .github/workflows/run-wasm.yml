@@ -21,9 +21,8 @@ jobs:
 
     - name: Create Dockerfile
       run: |
-        echo 'FROM scratch' > Dockerfile
+        echo 'FROM wasmtime/wasmtime:latest' > Dockerfile
         echo 'COPY main.wasm /main.wasm' >> Dockerfile
-        echo 'COPY --from=wasmtime/wasmtime /wasmtime /wasmtime' >> Dockerfile
         echo 'ENTRYPOINT ["/wasmtime", "/main.wasm"]' >> Dockerfile
 
     - name: Build Docker image
