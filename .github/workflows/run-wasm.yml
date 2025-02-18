@@ -34,11 +34,11 @@ jobs:
         path: main.wasm
 
     - name: Build Docker image
-          run: |
-          echo "FROM scratch" > Dockerfile
-          echo "COPY main.wasm /main.wasm" >> Dockerfile
-          echo 'CMD ["wasmtime", "/main.wasm"]' >> Dockerfile
-          docker build -t wasm-container .
+      run: |
+        echo "FROM scratch" > Dockerfile
+        echo "COPY main.wasm /main.wasm" >> Dockerfile
+        echo 'CMD ["wasmtime", "/main.wasm"]' >> Dockerfile
+        docker build -t wasm-container .
 
     - name: Run Docker container
-          run: docker run --rm wasm-container
+      run: docker run --rm wasm-container
