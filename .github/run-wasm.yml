@@ -1,0 +1,33 @@
+name: Run WASM with Wasmtime
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-wasm:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Create Dockerfile
+      run: |
+        echo 'FROM scratch' > Dockerfile
+        echo 'COPY main.wasm /main.wasm' >> Dockerfile
+        echo 'COPY --from=wasmtime/wasmtime /wasmtime /wasmtime' >> Dockerfile
+        echo 'ENTRYPOINT ["/wasmtime", "/main.wasm"]' >> Dockerfile
+
+    - name: Build Docker image
+      run: docker build -t run-wasm .
+
+    - name: Run Docker container
+      run: docker run --rm run-wasm
