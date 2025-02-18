@@ -40,5 +40,5 @@ jobs:
           echo 'CMD ["wasmtime", "/main.wasm"]' >> Dockerfile
           docker build -t wasm-container .
 
-        - name: Run Docker container
+    - name: Run Docker container
           run: docker run --rm wasm-container
