@@ -1,4 +1,4 @@
-name: Build Go WASM
+name: Run Go WASM
 
 on:
   workflow_dispatch:  # Make the workflow run manually
