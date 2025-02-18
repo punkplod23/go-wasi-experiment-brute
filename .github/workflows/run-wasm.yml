@@ -39,5 +39,6 @@ jobs:
     - name: Run Docker container
       run: |
            output=$(docker run --rm -v ${{ github.workspace }}/main.wasm:/main.wasm wasm-container)
-           echo "wasm_output=$output" >> $GITHUB_OUTPUT
-           echo "$output" > output.txt
+           escaped_output=$(echo "$output" | jq -r tojson)
+           echo "wasm_output=$escaped_output" >> $GITHUB_OUTPUT
+           echo "$escaped_output" > output.txt
