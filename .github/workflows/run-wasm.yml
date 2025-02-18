@@ -41,3 +41,9 @@ jobs:
            output=$(docker run --rm -v ${{ github.workspace }}/main.wasm:/main.wasm wasm-container)
            echo "$output"
            echo "$output" > output.txt
+    
+    - name: Upload WASM OUTPUT
+      uses: actions/upload-artifact@v4
+      with:
+        name: wasm-output
+        path: output.txt
