@@ -40,4 +40,4 @@ jobs:
       run: |
            output=$(docker run --rm -v ${{ github.workspace }}/main.wasm:/main.wasm wasm-container)
            echo "$output" > output.txt  
-           echo "::set-output name=wasm_output::$output"
+           echo "name=wasm_output::$output" >> $GITHUB_OUTPUT
