@@ -35,7 +35,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        echo "FROM scratch" > Dockerfile
+        echo "FROM debian:bullseye-slim" > Dockerfile
+        echo "RUN apt-get update && apt-get install -y wasmtime" >> Dockerfile
         echo "COPY main.wasm /main.wasm" >> Dockerfile
         echo 'CMD ["wasmtime", "/main.wasm"]' >> Dockerfile
         docker build -t wasm-container .
