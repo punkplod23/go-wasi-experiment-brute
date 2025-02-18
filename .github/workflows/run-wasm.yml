@@ -36,7 +36,7 @@ jobs:
     - name: Build Docker image
       run: |
         echo "FROM debian:bullseye-slim" > Dockerfile
-        echo "RUN apt-get update && apt-get install -y gnupg2 curl ca-certificates && curl https://wasmtime.dev/install.sh -sSf | bash && cp /root/.wasmtime/bin/wasmtime /usr/local/bin/" >> Dockerfile
+        echo "RUN apt-get update && apt-get install -y --no-install-recommends gnupg2 curl ca-certificates && curl https://wasmtime.dev/install.sh -sSf | bash && cp /root/.wasmtime/bin/wasmtime /usr/local/bin/" >> Dockerfile
         echo "COPY main.wasm /main.wasm" >> Dockerfile
         echo 'CMD ["wasmtime", "/main.wasm"]' >> Dockerfile
         docker build -t wasm-container .
