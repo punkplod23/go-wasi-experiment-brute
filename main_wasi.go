@@ -30,5 +30,20 @@ func main() {
 	fmt.Println("Hello world")
 	fmt.Println(algorithm, hash, *maxAttempts, *length)
 	//print(*algorithm, *hash, *maxAttempts, *length)
-	println(wordchecker.BruteForce(algorithm, hash, *maxAttempts, *length))
+	println(BruteForce(algorithm, hash, *maxAttempts, *length))
+}
+
+//go:wasmexport
+func BruteForce(algorithm string, hash string, maxAttempts int, length int) string {
+	return wordchecker.BruteForce(algorithm, hash, maxAttempts, length)
+}
+
+//go:wasmexport
+func helloWorld() {
+	println("Hello world!")
+}
+
+//go:wasmexport
+func HashMethods() string {
+	return "MD5"
 }

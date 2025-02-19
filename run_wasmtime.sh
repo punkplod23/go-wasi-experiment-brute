@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # Run the WebAssembly module with Wasmtime and pass the flags
-wasmtime main.wasm MD2 8df4c057f9b7de9d6bd9b0ca3b795734 100000 9
+wasmtime main.wasm MD5 098f6bcd4621d373cade4e832627b4f6 100000 4
